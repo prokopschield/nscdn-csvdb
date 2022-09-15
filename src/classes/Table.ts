@@ -95,11 +95,11 @@ export class Table<T extends Record<string, ValueType>> {
 		);
 	}
 
-	async find_first(criteria: Partial<T>, n: number) {
+	async find_first(criteria: Partial<T>, n: number = 1) {
 		return this.find(criteria, `| head -n ${n}`);
 	}
 
-	async find_last(criteria: Partial<T>, n: number) {
+	async find_last(criteria: Partial<T>, n: number = 1) {
 		return this.find(criteria, `| tail -n ${n}`);
 	}
 }
