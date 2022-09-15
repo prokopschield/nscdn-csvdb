@@ -4,7 +4,7 @@ import nsblob from 'nsblob';
 import { hexToRecord, recordToHex } from './encoder';
 
 export const allowed_regexp = /^[a-z\d]{0,64}$/gi;
-export const serialized_regexp = /^\$[a-z_~\d]{44}$/gi;
+export const serialized_regexp = /^\$[a-z_~\d]{43}$/gi;
 
 export async function serialize(
 	input: string | Buffer | object
