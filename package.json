@@ -1,0 +1,28 @@
+{
+	"name": "nscdn-csvdb",
+	"description": "csv database with nsblob backend",
+	"version": "0.1.0-1",
+	"main": "lib/index.js",
+	"bin": {
+		"nscdn-csvdb-example": "lib/cli.js"
+	},
+	"scripts": {
+		"build": "pnpm install && tsc",
+		"start": "node lib/cli"
+	},
+	"author": "Prokop Schield",
+	"dependencies": {
+		"@prokopschield/argv": "^0.1.2",
+		"doge-json": "^1.2.8",
+		"nsblob": "^0.2.17"
+	},
+	"devDependencies": {
+		"@types/node": ">=16"
+	},
+	"keywords": [],
+	"license": "GPL-3.0-or-later",
+	"types": "./lib/index.d.ts",
+	"directories": {
+		"lib": "lib"
+	}
+}
