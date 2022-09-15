@@ -19,7 +19,7 @@ export async function serialize(
 }
 
 export async function deserialize_raw(input: string): Promise<string | Buffer> {
-	return serialized_regexp.test(input)
+	return input.match(serialized_regexp)
 		? await nsblob.fetch(recordToHex(input))
 		: input;
 }
