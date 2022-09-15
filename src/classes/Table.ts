@@ -58,7 +58,7 @@ export class Table<T extends Record<string, ValueType>> {
 	}
 
 	/** the second parameter may be a unix filter */
-	async find(criteria: Partial<T>, append: string = '') {
+	async find(criteria: Partial<T>, append: string = ''): Promise<T[]> {
 		const values = Object.values(criteria).filter((a) => a);
 		const encoded = await Promise.all(values.map(serialize));
 
@@ -90,7 +90,7 @@ export class Table<T extends Record<string, ValueType>> {
 						]);
 					}
 
-					return Object.fromEntries(entries);
+					return Object.fromEntries(entries) as T;
 				})
 		);
 	}
