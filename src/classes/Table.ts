@@ -74,8 +74,8 @@ export class Table<T extends Record<string, ValueType>> {
 
 		return Promise.all(
 			stdout
-				.trim()
 				.split(/\n+/g)
+				.filter((a) => a)
 				.map(async (line) => {
 					const parts = line.split(/[,;]/g);
 					const entries = new Array();
