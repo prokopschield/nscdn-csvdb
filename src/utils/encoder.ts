@@ -30,7 +30,7 @@ export function encode(input: Uint8Array) {
 		}
 		tmp <<= 8;
 	}
-	if (mod) out += alphabet[tmp >> 8];
+	if (mod) out += alphabet[tmp >> (2 + mod * 2)];
 	return out;
 }
 
@@ -75,6 +75,7 @@ export function decode(input: string) {
 		++mod;
 	}
 	if (tmp) {
+		tmp >>= 6;
 		const ar = Array<number>();
 		while (tmp) {
 			ar.push(tmp & 255);
