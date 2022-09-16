@@ -13,6 +13,7 @@
 	"author": "Prokop Schield",
 	"dependencies": {
 		"@prokopschield/argv": "^0.1.2",
+		"@prokopschield/base64": "0.1.0-1",
 		"doge-json": "^1.2.8",
 		"nsblob": "^0.2.17"
 	},
