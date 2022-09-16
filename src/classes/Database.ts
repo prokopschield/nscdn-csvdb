@@ -30,7 +30,10 @@ export class Database {
 		fs.mkdirSync(this._directory, { recursive: true });
 
 		const table = new Table(
-			path.resolve(this._directory, `${await serialize(name)}.csv`),
+			path.resolve(
+				this._directory,
+				`${(await serialize(name)).replace('$', '')}.csv`
+			),
 			template
 		);
 
