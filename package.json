@@ -1,7 +1,7 @@
 {
 	"name": "nscdn-csvdb",
 	"description": "csv database with nsblob backend",
-	"version": "0.1.0-6",
+	"version": "0.1.0-7",
 	"main": "lib/index.js",
 	"bin": {
 		"nscdn-csvdb-example": "lib/cli.js"
