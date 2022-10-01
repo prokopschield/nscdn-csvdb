@@ -62,9 +62,9 @@ export class Table<T extends Record<string, ValueType>> {
 		const values = Object.values(criteria).filter((a) => a);
 		const encoded = await Promise.all(values.map(serialize));
 
-		const query = `cat ${this._file} ${encoded.map(
-			(filter) => `| grep "${filter}"`
-		)} ${append}`;
+		const query = `cat ${this._file} ${encoded
+			.map((filter) => `| grep "${filter}"`)
+			.join(' ')} ${append}`;
 
 		const { stdout, stderr } = await exec_p(query);
 
