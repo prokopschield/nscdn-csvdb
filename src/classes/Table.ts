@@ -48,7 +48,7 @@ export class Table<T extends Record<string, ValueType>> {
 			this._stream.write(
 				(
 					await Promise.all(
-						this._types.map(([key, type]) => {
+						this._types.map(([key]) => {
 							return value[key] ? serialize(value[key]) : '';
 						})
 					)
