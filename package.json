@@ -1,7 +1,7 @@
 {
 	"name": "nscdn-csvdb",
 	"description": "csv database with nsblob backend",
-	"version": "0.1.0-11",
+	"version": "0.1.0-12",
 	"main": "lib/index.js",
 	"bin": {
 		"nscdn-csvdb-example": "lib/cli.js"
@@ -15,7 +15,7 @@
 		"@prokopschield/argv": "^0.1.2",
 		"@prokopschield/base64": "0.1.0-1",
 		"doge-json": "^1.2.8",
-		"nsblob": "^0.2.17"
+		"nsblob": "^0.2.18-2"
 	},
 	"devDependencies": {
 		"@types/node": ">=16"
