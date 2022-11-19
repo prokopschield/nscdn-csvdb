@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { ValueType } from '../types';
-import { serialize } from '../utils/serializer';
 
 import { Table } from './Table';
+import { RowDescriptor } from '../types';
+import { serialize_raw } from '../utils/serializer';
 
 export class Database {
 	private _directory: string;
@@ -15,11 +15,11 @@ export class Database {
 
 	/**
 	 * @param name must be unique
-	 * @param template example value
+	 * @param descriptor example value
 	 */
-	async getTable<T extends Record<string, ValueType>>(
+	async getTable<T extends Record<string, any>>(
 		name: string,
-		template: T
+		descriptor: RowDescriptor<T>
 	): Promise<Table<T>> {
 		const existing = this._tables.get(name);
 
@@ -32,9 +32,9 @@ export class Database {
 		const table = new Table(
 			path.resolve(
 				this._directory,
-				`${(await serialize(name)).replace('$', '')}.csv`
+				`${(await serialize_raw(name)).replace('$', '')}.csv`
 			),
-			template
+			descriptor
 		);
 
 		this._tables.set(name, table);

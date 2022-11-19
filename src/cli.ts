@@ -2,7 +2,7 @@
 
 import argv from '@prokopschield/argv';
 
-import { Database } from './classes/Database';
+import { Database, descriptors } from '.';
 
 async function main() {
 	const args = argv.expectMutate(['database', 'table'], {
@@ -11,11 +11,14 @@ async function main() {
 	});
 	const database = new Database(String(args.database));
 	const table = await database.getTable(String(args.table), {
-		text: 'string',
+		line: descriptors.JsNumberType,
+		text: descriptors.JsStringType,
 	});
 
+	let counter = 0;
+
 	process.stdin.on('data', (line) =>
-		table?.insert({ text: String(line).trim() })
+		table?.insert({ line: ++counter, text: String(line).trim() })
 	);
 }
 
