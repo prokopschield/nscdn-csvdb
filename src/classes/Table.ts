@@ -67,7 +67,7 @@ export class Table<T extends Record<string, any>> {
 
 		const query = `cat ${this._file} ${encoded
 			.map((filter) => `| grep "${filter}"`)
-			.join(' ')} ${append} | cat`;
+			.join(' ')} ${append} | cat`.replace(/\$/g, '\\$');
 
 		const { stdout, stderr } = await exec_p(query);
 
