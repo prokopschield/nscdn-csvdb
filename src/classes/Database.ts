@@ -14,13 +14,13 @@ export class Database {
 	}
 
 	/**
-	 * @param name must be unique
-	 * @param descriptor example value
+	 * @param name must be unique, must be a VALID FILENAME
+	 * @param descriptor Record<key, { serializer, deserializer }>
 	 */
-	async getTable<T extends Record<string, any>>(
+	getTable<T extends Record<string, any>>(
 		name: string,
 		descriptor: RowDescriptor<T>
-	): Promise<Table<T>> {
+	): Table<T> {
 		const existing = this._tables.get(name);
 
 		if (existing) {
@@ -30,10 +30,7 @@ export class Database {
 		fs.mkdirSync(this._directory, { recursive: true });
 
 		const table = new Table(
-			path.resolve(
-				this._directory,
-				`${(await serialize_raw(name)).replace('$', '')}.csv`
-			),
+			path.resolve(this._directory, `${name}.csv`),
 			descriptor
 		);
 
