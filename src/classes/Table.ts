@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import fs from 'fs';
-import { Lock, Pipeline } from 'ps-std';
+import { Lock, Pipeline, shellEscape } from 'ps-std';
 import { promisify } from 'util';
 
 import { RowDescriptor } from '../types';
@@ -20,7 +20,7 @@ export class Table<T extends Record<string, any>> {
 	private _lock = new Lock();
 
 	constructor(file: string, descriptor: RowDescriptor<T>) {
-		this._file = file;
+		this._file = shellEscape(file);
 		this._stream = fs.createWriteStream(file, {
 			flags: 'a',
 		});
