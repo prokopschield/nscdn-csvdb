@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import fs from 'fs';
+import { Lock, Pipeline } from 'ps-std';
 import { promisify } from 'util';
 
 import { RowDescriptor } from '../types';
@@ -15,6 +16,8 @@ export class Table<T extends Record<string, any>> {
 		keyof RowDescriptor<T>,
 		RowDescriptor<T>[keyof RowDescriptor<T>]
 	][];
+
+	private _lock = new Lock();
 
 	constructor(file: string, descriptor: RowDescriptor<T>) {
 		this._file = file;
@@ -34,23 +37,19 @@ export class Table<T extends Record<string, any>> {
 		return this._stream;
 	}
 
-	async insert(...values: T[]) {
-		for (const value of values) {
-			this._stream.write(
-				(
-					await Promise.all(
-						this._descriptorEntries.map(
-							async ([name, { serializer }]) =>
-								serialize_raw(
-									value[name]
-										? await serializer(value[name])
-										: ''
-								)
-						)
-					)
-				).join(',') + '\n'
+	insert_item = Pipeline((value: T) => {
+		return this._descriptorEntries.map(async ([name, { serializer }]) => {
+			return await serialize_raw(
+				value[name] ? await serializer(value[name]) : ''
 			);
-		}
+		});
+	})
+		.pipe((items) => Promise.all(items))
+		.pipe((items) => items.join(',') + '\n')
+		.pipe((line) => this._stream.write(line), this._lock);
+
+	async insert(...values: T[]) {
+		await Promise.all(values.map(this.insert_item));
 	}
 
 	/** the second parameter may be a unix filter */
